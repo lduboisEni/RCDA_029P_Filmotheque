@@ -5,7 +5,7 @@ import java.util.List;
 public class Movie {
 	
 	protected long id;
-	protected String tittle;
+	protected String title;
 	protected int year;
 	protected int duration;
 	protected String synopsis;
@@ -20,15 +20,15 @@ public class Movie {
 	
 	/**
 	 * @param id
-	 * @param tittle
+	 * @param title
 	 * @param year
 	 * @param duration
 	 * @param synopsis
 	 */
 	
-	public Movie(long id, String tittle, int year, int duration, String synopsis) {
+	public Movie(long id, String title, int year, int duration, String synopsis) {
 		this.id = id;
-		this.tittle = tittle;
+		this.title = title;
 		this.year = year;
 		this.duration = duration;
 		this.synopsis = synopsis;
@@ -46,16 +46,16 @@ public class Movie {
 		this.id = id;
 	}
 	/**
-	 * @return the tittle
+	 * @return the title
 	 */
-	public String getTittle() {
-		return tittle;
+	public String gettitle() {
+		return title;
 	}
 	/**
-	 * @param tittle the tittle to set
+	 * @param title the title to set
 	 */
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
+	public void settitle(String title) {
+		this.title = title;
 	}
 	/**
 	 * @return the year
@@ -141,5 +141,29 @@ public class Movie {
 	public void setActors(List<Participant> actors) {
 		this.actors = actors;
 	}
+	
+	@Override
+	public String toString() {;
+		
+		String directorString = String.format("Director : %s %s [id=%d]", director.firstName, director.lastName, director.id);
+		
+		String actorsString = "Actors : [";
+		int index = 0;
+		for(Participant actor : actors) {
+			if (index > 0) {
+				actorsString += String.format(", %s %s [id=%d]", actor.firstName, actor.lastName, actor.id);
+			}
+			else {
+				actorsString += String.format("%s %s [id=%d]", actor.firstName, actor.lastName, actor.id);
+			}
+			index ++;
+		}
+		actorsString += "]";
 
+		
+		
+			return String.format("Movie [id=%d] \ntitle: %s \nSynopsis: %s \n %s \n %s", this.id, this.title, this.synopsis, directorString, actorsString);
+	}
+
+	
 }
