@@ -2,17 +2,16 @@ package fr.eni.movielibrary.bo;
 
 public class Genre {
 	
-	protected String label;
 	protected long id;
-		
+	protected String label;	
 	
 	/**
 	 * @param label
 	 * @param id
 	 */
-	public Genre(String _label, long _id) {
-		this.label = _label;
+	public Genre(long _id, String _label) {
 		this.id = _id;
+		this.label = _label;
 	}
 	
 	

@@ -17,6 +17,6 @@ public interface MovieService {
 	public List<Participant> getParticipants();	
 	public Participant getParticipantById(long id);
 	
-	public Movie saveMovie(Movie movie);	
+	public void saveMovie(Movie movie);	
 
 }
