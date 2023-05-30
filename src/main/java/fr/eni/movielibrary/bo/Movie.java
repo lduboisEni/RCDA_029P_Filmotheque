@@ -5,7 +5,7 @@ import java.util.List;
 public class Movie {
 	
 	protected long id;
-	protected String title;
+	public String title;
 	protected int year;
 	protected int duration;
 	protected String synopsis;

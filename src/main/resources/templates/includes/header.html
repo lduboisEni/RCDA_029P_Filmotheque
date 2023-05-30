@@ -1,0 +1,45 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/vendor/uikit-3.16.19/css/uikit.min.css" />
+    <script src="/vendor/uikit-3.16.19/js/uikit.min.js"></script>
+    <script src="/vendor/uikit-3.16.19/js/uikit-icons.min.js"></script>
+    <title>Filmothèque</title>
+</head>
+<body>
+<header>
+    <!-- Main Navbar -->
+    <nav class="uk-container uk-navbar">
+        <div class="uk-navbar-left">
+            <ul class="uk-navbar-nav">
+                <li class="uk-active">
+                    <a th:href="@{'/'}"><strong>Filmothèque</strong></a>
+                </li> 
+            </ul>
+        </div>
+        <div class="uk-navbar-right">
+              <!-- Block connecté -->
+                    <ul th:if="${loggedUser != null}" class="uk-navbar-nav">
+                        <li><span th:text="${'Bienvenue ' + loggedUser.login}" class="uk-text-middle"></span></li>
+                        <li><span><a th:href="@{/logout}" class="uk-button uk-button-default">Deconnexion</a></span></li>
+                    </ul>
+                    <!-- ./Block connecté -->
+                    <!-- Block deconnecté -->
+                    <div th:if="${loggedUser == null}">
+                        <a th:href="@{/login}" class="uk-button uk-button-default uk-visible@m">Se Connecter</a>
+                    </div>
+                    <!-- ./Block deconnecté -->
+            <a href="#" class="uk-navbar-toggle uk-hidden@s" uk-navbar-toggle-icon uk-toggle="target: #sidenav"></a>
+        </div>
+    </nav>
+</header>
+
+<div id="sidenav" uk-offcanvas="flip: true" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav">
+            <li><a class="uk-text-large" href="https://shubhamjain.co/about/">about</a></li>
+            <li><a class="uk-text-large" href="https://shubhamjain.co/">blog</a></li>
+        </ul>
+    </div>
+</div>
+</body>

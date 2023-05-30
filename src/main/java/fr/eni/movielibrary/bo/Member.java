@@ -13,6 +13,19 @@ public class Member {
 	
 	List<Review> reviews;
 	
+	
+	
+
+	/**
+	 * @param login
+	 * @param password
+	 */
+	public Member() {
+		login = "";
+		password = "";
+	}
+
+
 
 	/**
 	 * @param id
@@ -30,6 +43,8 @@ public class Member {
 		this.password = _password;
 		this.isAdmin = _isAdmin;
 	}
+	
+	
 
 	/**
 	 * @return the id
