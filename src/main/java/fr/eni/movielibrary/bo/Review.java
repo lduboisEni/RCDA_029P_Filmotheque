@@ -7,6 +7,7 @@ public class Review {
 	String comment;
 	
 	Member membre;
+	protected Movie movie;
 
 	/**
 	 * @param id
@@ -17,6 +18,10 @@ public class Review {
 		this.id = _id;
 		this.rating = _rating;
 		this.comment = _comment;
+	}
+
+	public Review() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -73,6 +78,21 @@ public class Review {
 	 */
 	public void setMembre(Member membre) {
 		this.membre = membre;
+	}
+
+	/**
+	 * @return the movie
+	 */
+	public Movie getMovie() {
+		return movie;
+	}
+
+	/**
+	 * @param movie the movie to set
+	 */
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}	
+	
 	
 }

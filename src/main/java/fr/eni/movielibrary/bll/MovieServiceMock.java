@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import fr.eni.movielibrary.bo.Genre;
 import fr.eni.movielibrary.bo.Movie;
 import fr.eni.movielibrary.bo.Participant;
+import fr.eni.movielibrary.bo.Review;
+import fr.eni.movielibrary.bo.ServiceResult;
 import fr.eni.movielibrary.bll.MovieService;
 
 @Service
@@ -129,7 +131,62 @@ public class MovieServiceMock implements MovieService {
 	}
 
 	@Override
+	public ServiceResult addMovie(Movie movie) {		
+		ServiceResult result = new ServiceResult();
+
+		
+		if (movie.getDuration() < 1) {
+			result.addError("La durée doit être supérieur à 0");
+		}
+		
+		if (!(movie.getSynopsis().length() >=20 && movie.getSynopsis().length() <= 250)) {
+			result.addError("Le synopsis doit être comprise entre 20 et 250 caractères");			
+		}
+		
+		if (result.isValid()) {			
+			lstMovies.add(movie);
+		}
+		
+		return result;
+	}
+	
+	@Override
 	public void saveMovie(Movie movie) {
-		lstMovies.add(movie);
+		// Chercher l'index
+		int index = 0;
+		int indexToEdit = -1;
+		for (Movie currentMovie : lstMovies) {
+			// Si le slug correspond à la personne renseigné
+			if (currentMovie.getId() == movie.getId()) {
+				indexToEdit = index;
+			}
+			index++;
+		}
+		
+		// Modifier depuis l'index
+		if (indexToEdit > -1) {
+			lstMovies.set(indexToEdit, movie);
+		}
+	}
+
+	@Override
+	public ServiceResult addReview(Review review, int movieId) {
+		ServiceResult result = new ServiceResult();
+		
+		// Récupérer
+		Movie movie = getMovieById(movieId);
+		
+		// Si on trouve le film
+		if (movie != null) {
+			// Ajouter la review
+			movie.addReview(review);
+			
+			// Sauvegarder le film
+			saveMovie(movie);
+		} else {
+			result.addError("Le film n'existe pas");
+		}
+		
+		return result;
 	}
 }

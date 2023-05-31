@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/vendor/uikit-3.16.19/css/uikit.min.css" />
+    <script src="/vendor/uikit-3.16.19/js/uikit.min.js"></script>
+    <script src="/vendor/uikit-3.16.19/js/uikit-icons.min.js"></script>
+    <title>Fiche Film</title>
+</head>
+
+<body>
+<!-- Header -->
+<div th:include="includes/header"></div>
+<section class="uk-section uk-article">
+    <div class="uk-container uk-container-small">
+    	
+ 	 <!-- Alert erreur -->
+    <div th:if="${errors != null && errors.size() > 0}" class="uk-alert-danger" uk-alert>
+         <a class="uk-alert-close" uk-close></a>
+         <!-- Pour chaque erreur je l'affiche -->
+         <p th:each="error : ${errors}" th:text="${error}"></p>
+     </div>
+     <!-- ./Alert erreur -->
+    
+        <h2 class="uk-text-bold uk-h1 uk-margin-remove-adjacent uk-margin-remove-top">Nouveau film</h2>
+    
+        <!-- // Formulaire  -->
+        <form action="/add" method="post" th:object="${formMovie}">
+
+            <fieldset class="uk-fieldset">
+
+                <legend class="uk-legend">Formulaire de création</legend>
+                
+                                    <!-- Champ de saisie Lastname -->
+                <div class="uk-margin">
+                	<div>
+                 	<label class="uk-form-label">Titre : </label>
+     				<div class="uk-form-controls">
+                    		<input class="uk-input" type="text" th:field="${movie.title}" aria-label="Input" id="title">
+                    	</div>
+                    </div>
+                </div>
+
+                <!-- Affichage genre -->
+	<div class="uk-margin">
+                	<label class="uk-label">Genre : </label>
+			<select class="uk-select" th:field="${movie.genre}">
+               	<option th:each="genre : ${genreOptions}" th:value="${genre.id}" th:text="${genre.label}"></option>
+               </select>
+                </div>
+
+                <!-- Champ de saisie Lastname -->
+                <div class="uk-margin">
+                	<div>
+                 	<label class="uk-form-label">Année : </label>
+     				<div class="uk-form-controls">
+				<input class="uk-input" type="text" th:field="${movie.year}" aria-label="Input" id="year">
+			</div>                        	
+                    </div>
+                </div>
+                                    <!-- Champ de saisie Lastname -->
+			<div class="uk-margin">
+            	<div class="uk-form-label">Realisateur</div>
+            	<div class="uk-form-controls">
+					<select class="uk-select" th:field="${movie.director}">
+                            <option th:each="participant : ${participantOptions}" th:value="${participant.id}"
+                                th:text="${participant.lastname + ' ' + participant.firstname}"></option>
+                    </select>
+                    </div>
+           </div>
+                               <!-- Champ de saisie Lastname -->
+                <div class="uk-margin">
+                	<div>
+                 	<label class="uk-form-label">Durée : </label>
+                 	<div class="uk-form-controls">
+                    		<input class="uk-input" type="text" th:value="${movie.duration} + ' minutes'" aria-label="Input" id="duration">
+                		</div>
+                	</div>
+                </div>
+                
+                                <!-- Champ de saisie synopsis -->
+                <div class="uk-margin">
+                    <div class="uk-form-label">Synopsis</div>
+                    <div class="uk-form-controls">
+                        <textarea class="uk-textarea" th:field="${movie.synopsis}"></textarea>
+                    </div>
+                </div>
+
+                                    <!-- Champ de saisie Acteurs -->
+                <div class="uk-margin">
+                    <div class="uk-form-label">Acteurs</div>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" th:field="${movie.actors}" multiple>
+                            <option th:each="participant : ${participantOptions}" th:value="${participant.id}"
+                                th:text="${participant.lastname + ' ' + participant.firstname}"></option>
+                        </select>
+                    </div>
+                </div>  
+                   
+                                <!-- Bouton Submit -->
+                <div class="uk-margin" uk-margin>
+                    <button class="uk-button uk-button-default">Submit</button>
+                </div>                     
+                </fieldset>
+            </form>
+
+        </div>
+    </section>
+
+</body>
+
+</html>

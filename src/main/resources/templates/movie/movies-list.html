@@ -29,7 +29,12 @@
                         <p th:text="${movie.synopsis}"></p>
                         <!-- Lien pour rediriger sur le form -->
                         <!-- Exemple du resultat généré : /person/isaac -->
-                        <a th:href="@{'/movie/' + ${movie.id}}">Détail</a>
+                        <div>
+						    <div class="uk-button-group">
+						        <a th:href="@{'/movie/' + ${movie.id}}" class="uk-button uk-button-primary">Détail</a>
+						        <a th:href="@{'/movie/' + ${movie.id} + '/avis/'}" class="uk-button uk-button-primary">Avis</a>
+						    </div>
+						</div>
                     </div>
                 </div>
             </div>

@@ -33,6 +33,13 @@ public class Movie {
 		this.duration = duration;
 		this.synopsis = synopsis;
 	}
+	
+	
+	public Movie() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * @return the id
 	 */
@@ -141,6 +148,32 @@ public class Movie {
 	public void setActors(List<Participant> actors) {
 		this.actors = actors;
 	}
+	
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	/**
+	 * Ajouter une note
+	 * @param review
+	 */
+	public void addReview(Review review) {
+		reviews.add(review);
+	}
+	
+	
 	
 	@Override
 	public String toString() {;

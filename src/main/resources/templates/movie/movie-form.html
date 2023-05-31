@@ -1,65 +1,122 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/vendor/uikit-3.16.19/css/uikit.min.css" />
-    <script src="/vendor/uikit-3.16.19/js/uikit.min.js"></script>
-    <script src="/vendor/uikit-3.16.19/js/uikit-icons.min.js"></script>
-    <title>Fiche Film</title>
-</head>
-
-<body>
 <!-- Header -->
 <div th:include="includes/header"></div>
-    <section class="uk-section uk-article">
-        <div class="uk-container uk-container-small">
-            <h2 class="uk-text-bold uk-h1 uk-margin-remove-adjacent uk-margin-remove-top" th:text="${movie.title}"></h2>
-        
-            <!-- // Formulaire  -->
-            <form action="movie" method="post" th:object="${formMovie}">
 
-                <fieldset class="uk-fieldset">
+<!-- Content -->
+<section class="uk-section uk-article">
+    <div class="uk-container uk-container-small">
 
-                    <legend class="uk-legend">Détail du film</legend>
+        <h2 class="uk-article-title" th:text="${movie.title}"></h2>
 
-                    <!-- Affichage genre -->
-                    <div class="uk-margin">
-                    	<label for="genre">Genre : </label>
-                        <input class="uk-input" type="text" th:field="${movie.genre.label}" id="genre">
+        <div class="uk-flex uk-flex-wrap uk-flex-wrap-around">
+            <div class="uk-width-1-3">
+                <img src="/img/Sharknado_2.png" />
+            </div>
+
+            <div class="uk-width-1-2 uk-margin-left">
+                <!--AUTHOR-->
+                <section class="uk-section uk-section-small">
+                    <div id="author-wrap" class="uk-container uk-container-small">
+                        <div class="uk-width-expand">
+                            <h4 class="uk-margin-remove uk-text-bold"
+                                th:text="${movie.director.firstName + ' ' + movie.director.lastName}"></h4>
+                            <span class="uk-text-small uk-text-muted"
+                                th:text="${'Année de sortie : ' + movie.year}"></span>
+                            <p th:text="${'Genre :' + movie.genre.label}"></p>
+                            <p th:text="${'Durée du film : ' + movie.duration}"></p>
+                            <p th:text="${movie.synopsis}"></p>
+                        </div>
                     </div>
-
-                    <!-- Champ de saisie Lastname -->
-                    <div class="uk-margin">
-                    	<label for="year">Année : </label>
-                        <input class="uk-input" type="text" th:field="${movie.year}" aria-label="Input" id="year">
-                    </div>
-                                        <!-- Champ de saisie Lastname -->
-                    <div class="uk-margin">
-                    	<label for="director">Réalisateur : </label>
-                        <input class="uk-input" type="text" th:value="${movie.director.firstName + ' ' + movie.director.lastName}" aria-label="Input" id="director">
-                    </div>                    
-                                                            <!-- Champ de saisie Lastname -->
-                    <div class="uk-margin">
-                    	<label for="duration">Durée : </label>
-                        <input class="uk-input" type="text" th:value="${movie.duration} + ' minutes'" aria-label="Input" id="duration">
-                    </div>
-  
-                    	<!-- Champ de acteurs -->
-                    <select class="uk-select" multiple>
-                        <option th:each="actor : ${movie.actors}" th:text="${actor.firstName + ' ' + actor.lastName}"></option>
-                    </select>    
-                    
-                     <!-- Champ de saisie synopsis -->
-                    <div class="uk-margin">
-                        <textarea class="uk-textarea" th:field="${movie.synopsis}"></textarea>
-                    </div>                      
-                </fieldset>
-            </form>
-
+                </section>
+                <!--/AUTHOR-->
+            </div>
         </div>
-    </section>
 
-</body>
+        <!-- Zone ACTEURS  -->
+        <h2 class="uk-article-title">Acteurs</h2>
+        <div uk-grid style="padding-top: 1rem">
+            <div th:each="actor : ${movie.actors}" class="uk-width-1-4">
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-media-top">
+                        <img src="/img/actor_profil.png" width="200" height="400" alt="">
+                    </div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title" th:text="${actor.firstName + ' ' + actor.lastName}"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone REVIEW  -->
+        <h2 class="uk-article-title">Review</h2>
+        <!-- Formulaire add review -->
+        <div class="uk-card uk-card-default uk-card-body">
+            <form class="uk-form" th:action="@{'/add-review/' + ${movie.id}}" method="post">
+                <!-- Champ de la note -->               
+               	<div class="uk-margin">
+			        <div uk-form-custom="target: > * > span:first-child">
+                        <div class="uk-form-label">Note</div>
+			            <select aria-label="Custom controls" th:field="${review.rating}" required="required">
+			                <option th:value="0">0</option>
+			                <option th:value="1">1</option>
+			                <option th:value="2">2</option>
+			                <option th:value="3">3</option>
+			                <option th:value="4">4</option>
+			                <option th:value="5">5</option>
+			            </select>
+			            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+			                <span></span>
+			                <span uk-icon="icon: chevron-down"></span>
+			            </button>
+			        </div>
+			    </div>
+                <!-- Champ de saisie comment -->
+                <div class="uk-margin">
+                    <div class="uk-form-label">Commentaire</div>
+                    <div class="uk-form-controls">
+                        <textarea class="uk-textarea" th:field="${review.comment}"></textarea>
+                    </div>
+                </div>
+                <!-- Bouton Submit -->
+                <div class="uk-margin" uk-margin>
+                    <button class="uk-button uk-button-default">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <hr></hr>
+
+        <ul class="uk-comment-list">
+            <!-- Pour chaque review -->
+            <li th:each="review : ${movie.reviews}">
+                <article class="uk-comment uk-visible-toggle" tabindex="-1" role="comment">
+                    <header class="uk-comment-header uk-position-relative">
+                        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <img class="uk-comment-avatar" src="/img/comment_mock.png" width="80" height="80"
+                                    alt="">
+                            </div>
+                            <div class="uk-width-expand">
+                                <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset"
+                                        href="#">Author</a>
+                                </h4>
+                                <p class="uk-comment-meta uk-margin-remove-top"><a class="uk-link-reset" href="#"
+                                        th:text="${review.rating + '/5'}"></a></p>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="uk-comment-body">
+                        <p th:text="${review.comment}"></p>
+                    </div>
+                </article>
+            </li>
+        </ul>
+
+    </div>
+</section>
+<!-- ./Content -->
+<!-- Footer -->
+<div th:include="includes/footer"></div>
 
 </html>
